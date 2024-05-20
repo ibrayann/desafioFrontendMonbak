@@ -1,0 +1,62 @@
+input[type="checkbox"] {
+  border-color: "gray";
+}
+body {
+  font-family: "lato";
+  color: #0a0d47;
+}
+
+input[type="checkbox"]:checked {
+  background-color: rgb(26, 255, 0);
+  border-color: rgb(26, 255, 0);
+  box-shadow: 0 0 0 0.2rem rgba(0, 255, 0, 0.5);
+}
+input[type="checkbox"]:focus {
+  box-shadow: none;
+  border-color: "gray";
+}
+.completed-border {
+  position: relative;
+}
+
+.completed-border::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: rgb(26, 255, 0);
+  box-shadow: 0 0 0 0.2rem rgba(0, 255, 0, 0.2);
+}
+
+.incomplete-border {
+  position: relative;
+}
+
+.incomplete-border::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: #ff006f;
+  box-shadow: 0 0 10px 4px rgba(255, 0, 111, 0.2);
+}
+.task-content {
+  word-wrap: break-word;
+}
+
+.tast::-webkit-scrollbar {
+  width: 0px;
+}
+#taskName::placeholder {
+  color: white;
+  font-weight: 400;
+}
+
+#taskName:focus {
+  outline: none;
+  box-shadow: none;
+}
