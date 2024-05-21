@@ -1,41 +1,22 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import TaskForm from "./components/TaskForm";
-import TaskList from "./components/TaskList";
+import React, { useState } from "react";
 import { Toaster } from "react-hot-toast";
-import { useState } from "react";
 import Header from "./components/Header";
+import TaskList from "./components/TaskList";
+import Modal from "./components/Modal";
 
-export const Modal = ({ setCreateVisible, task }) => {
-  return (
-    <div
-      className="rounded-5 p-3"
-      style={{
-        position: "absolute",
-        bottom: 0,
-        width: "100%",
-        height: "45%",
-        backgroundColor: "#2F58E2",
-        zIndex: 500,
-      }}
-    >
-      {task ? (
-        <TaskForm task={task} setCreateVisible={setCreateVisible} />
-      ) : (
-        <TaskForm setVisible={setCreateVisible} />
-      )}
-    </div>
-  );
-};
-
-function App() {
+const App = () => {
   const [toggleModal, setToggleModal] = useState(false);
-  console.log("createVisible", toggleModal);
+  const [selectedTask, setSelectedTask] = useState(null);
+
+  const handleTaskClick = (task) => {
+    setSelectedTask(task);
+    setToggleModal(true);
+  };
+
   return (
     <div
       className="d-flex justify-content-center align-items-center w-100 vh-100"
-      style={{
-        backgroundColor: "#D7DBE6",
-      }}
+      style={{ backgroundColor: "#D7DBE6" }}
     >
       <section
         style={{
@@ -54,24 +35,29 @@ function App() {
             <Toaster />
           </div>
           <Header />
-          <TaskList toggleModal={setToggleModal} />
+          <TaskList onTaskClick={handleTaskClick} />
         </section>
-        {toggleModal && <Modal setCreateVisible={setToggleModal} />}
+        {toggleModal && (
+          <Modal setCreateVisible={setToggleModal} task={selectedTask} />
+        )}
         <button
-          type="submit"
+          type="button"
           className="btn rounded-4 box-shadow mb-5 px-4 py-3 mx-auto"
           style={{
             backgroundColor: "#2F58E2",
             color: "#fff",
             boxShadow: "0 0 10px #2F58E2",
           }}
-          onClick={() => setToggleModal(!toggleModal)}
+          onClick={() => {
+            setSelectedTask(null);
+            setToggleModal(!toggleModal);
+          }}
         >
           + Create Task
         </button>
       </section>
     </div>
   );
-}
+};
 
 export default App;

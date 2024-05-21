@@ -27,7 +27,7 @@ input[type="checkbox"]:focus {
   bottom: 0;
   width: 2px;
   background-color: rgb(26, 255, 0);
-  box-shadow: 0 0 0 0.2rem rgba(0, 255, 0, 0.2);
+  box-shadow: 0 0 10px 4px rgba(0, 255, 0, 0.2);
 }
 
 .incomplete-border {
@@ -52,8 +52,9 @@ input[type="checkbox"]:focus {
   width: 0px;
 }
 #taskName::placeholder {
-  color: white;
+  color: rgba(255, 255, 255, 0.6);
   font-weight: 400;
+  margin-bottom: 20px;
 }
 
 #taskName:focus {

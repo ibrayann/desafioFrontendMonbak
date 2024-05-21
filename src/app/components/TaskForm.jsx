@@ -26,20 +26,21 @@ const TaskForm = ({ setVisible, task }) => {
     }
 
     if (id) {
-      dispatch(updateTask({ id, name: taskName, priority }));
+      dispatch(updateTask({ id, name: taskName, priority: prioritySelect }));
     } else {
-      dispatch(addTask({ name: taskName, priority }));
+      dispatch(addTask({ name: taskName, priority: prioritySelect }));
     }
     setTaskName("");
     setPrioritySelect("Low");
+    setVisible(false);
   };
 
   const priorities = ["High", "Medium", "Low", "Very Low"];
 
   return (
     <form onSubmit={handleSubmit} className="p-3">
-      <div className="mb-3 ">
-        <section className="d-flex justify-content-between align-items-center align-content-center mb-2">
+      <div className="mb-3">
+        <section className="d-flex justify-content-between align-items-center align-content-center mb-3">
           <h4 className="text-white" style={{ fontWeight: 600 }}>
             {id ? "Update" : "Create"} a new task
           </h4>
@@ -57,7 +58,7 @@ const TaskForm = ({ setVisible, task }) => {
         </section>
         <input
           type="text"
-          className=" text-white border-0 bg-transparent border-bottom border-2 border-white"
+          className="text-white border-0 bg-transparent border-bottom border-2 border-white mb-1"
           id="taskName"
           value={taskName}
           onChange={(e) => setTaskName(e.target.value)}
@@ -66,7 +67,7 @@ const TaskForm = ({ setVisible, task }) => {
           autoComplete="off"
         />
       </div>
-      <div className="mb-3">
+      <div className="my-3">
         <span className="text-white" style={{ fontWeight: 500 }}>
           Priority
         </span>
@@ -89,7 +90,7 @@ const TaskForm = ({ setVisible, task }) => {
           ))}
         </section>
       </div>
-      <section className="d-flex flex-column gap-3 mt-4 justify-content-center ">
+      <section className="d-flex flex-column gap-3 mt-4 justify-content-center">
         <button
           type="submit"
           className="btn rounded-pill mx-auto mt-2"
@@ -100,7 +101,7 @@ const TaskForm = ({ setVisible, task }) => {
             backgroundColor: "#fff",
           }}
         >
-          {id}+ {id ? "Update" : "Create"} Task
+          + {id ? "Update" : "Create"} Task
         </button>
         <button
           type="button"

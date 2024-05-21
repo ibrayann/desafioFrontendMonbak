@@ -1,22 +1,32 @@
 import React, { useState } from "react";
 import { FaTimes } from "react-icons/fa";
-import toast, { Toaster } from "react-hot-toast";
-import { Modal } from "../App";
-import { toggleModal } from "../../redux/actions/actionsTasks";
-import { Button } from "react-bootstrap";
-const TaskItem = ({ task, onDelete, onToggle, toggleModal }) => {
+import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { deleteTask, toggleTask } from "../../redux/actions/actionsTasks";
+
+const TaskItem = ({ task, onTaskClick }) => {
   const { id, name, completed, priority } = task;
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const dispatch = useDispatch();
+
+  const handleDelete = (taskId) => {
+    dispatch(deleteTask(taskId));
+  };
+
+  const handleToggle = (taskId) => {
+    dispatch(toggleTask(taskId));
+  };
 
   const onHandleDelete = () => {
     if (confirmDelete) {
-      onDelete(id);
+      handleDelete(id);
       setConfirmDelete(false);
       showToast();
     } else {
       setConfirmDelete(true);
     }
   };
+
   const showToast = () => {
     toast.success("Task eliminada correctamente", {
       style: {
@@ -25,10 +35,6 @@ const TaskItem = ({ task, onDelete, onToggle, toggleModal }) => {
         color: "#333",
       },
     });
-  };
-
-  const toggleModalfunction = () => {
-    return <Modal task={task} setCreateVisible={toggleModal} />;
   };
 
   return (
@@ -52,14 +58,18 @@ const TaskItem = ({ task, onDelete, onToggle, toggleModal }) => {
           type="checkbox"
           id={`taskCheckbox-${id}`}
           checked={completed ?? false}
-          onChange={() => onToggle(id)}
+          onChange={() => handleToggle(id)}
         />
         <div
           className={`d-flex flex-column flex-grow-1 ms-3 ps-3 ${
             completed ? "completed-border" : "incomplete-border"
           }`}
           style={{ maxWidth: "calc(100% - 46px)" }}
-          onClick={() => setConfirmDelete(false)}
+          onClick={() => {
+            if (!confirmDelete) {
+              onTaskClick(task);
+            }
+          }}
         >
           {confirmDelete ? (
             <p className="mb-0" style={{ zIndex: 100 }}>
@@ -67,29 +77,22 @@ const TaskItem = ({ task, onDelete, onToggle, toggleModal }) => {
             </p>
           ) : (
             <>
-              <label
-                className={`${
-                  completed ? "completed" : ""
-                } fw-bold task-content`}
+              <span
+                className="d-block"
+                style={{
+                  wordWrap: "break-word",
+                  textDecoration: completed ? "line-through" : "",
+                  fontWeight: "500",
+                  color: "#0a0d47",
+                }}
               >
-                <span
-                  className="d-block"
-                  style={{
-                    wordWrap: "break-word",
-                    textDecoration: completed ? "line-through" : "",
-                    fontWeight: "500",
-                    color: "#0a0d47",
-                  }}
-                >
-                  {name}
-                </span>
-              </label>
+                {name}
+              </span>
+
               <span style={{ color: "#A2A3B9" }}>{priority} Priority</span>
             </>
           )}
         </div>
-        <Button onClick={toggleModalfunction} />
-
         <button
           type="button"
           className="btn btn-link ms-2 p-0"

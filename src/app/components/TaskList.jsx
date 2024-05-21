@@ -1,19 +1,24 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { deleteTask, toggleTask } from "../../redux/actions/actionsTasks";
+import { useSelector } from "react-redux";
+import TaskForm from "./TaskForm";
 import TaskItem from "./TaskItem";
+import Undraw from "../../../public/undraw_no_data_re_kwbl.svg";
+import Modal from "./Modal";
 
-const TaskList = ({ toggleModal }) => {
+const TaskList = () => {
   const tasks = useSelector((state) => state.tasks);
-  const dispatch = useDispatch();
   const [statusTask, setStatusTask] = useState(null);
+  const [selectedTask, setSelectedTask] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
-  const handleDelete = (taskId) => {
-    dispatch(deleteTask(taskId));
+  const handleTaskClick = (task) => {
+    setSelectedTask(task);
+    setShowModal(true);
   };
 
-  const handleToggle = (taskId) => {
-    dispatch(toggleTask(taskId));
+  const handleModalClose = () => {
+    setShowModal(false);
+    setSelectedTask(null);
   };
 
   const priorityMap = {
@@ -34,50 +39,62 @@ const TaskList = ({ toggleModal }) => {
 
   return (
     <div>
-      {tasks.length === 0 ? (
-        <p>No hay tareas.</p>
-      ) : (
-        <ul className="list-group p-3">
-          <section className="mb-4 d-flex justify-content-start gap-3">
-            <span
-              onClick={() => setStatusTask(null)}
-              style={{ color: statusTask === null ? "black" : "grey" }}
+      <div>
+        {tasks.length === 0 ? (
+          <div className="d-flex flex-column mt-5 justify-content-center align-items-center">
+            <img
+              src={Undraw}
+              className="mt-5"
+              alt="undraw"
+              width={200}
+              height={200}
+            />
+            <h4 className="text-center mt-3">No tasks available</h4>
+          </div>
+        ) : (
+          <ul className="list-group p-3">
+            <section className="mb-4 d-flex justify-content-start gap-3">
+              <span
+                onClick={() => setStatusTask(null)}
+                style={{ color: statusTask === null ? "" : "grey" }}
+              >
+                All
+              </span>
+              <span
+                onClick={() => setStatusTask(true)}
+                style={{ color: statusTask === true ? "" : "grey" }}
+              >
+                Completed
+              </span>
+              <span
+                onClick={() => setStatusTask(false)}
+                style={{ color: statusTask === false ? "" : "grey" }}
+              >
+                Uncomplete
+              </span>
+            </section>
+            <section
+              className="task-list"
+              style={{
+                maxHeight: "410px",
+                overflowY: "auto",
+                scrollbarWidth: "none",
+                msOverflowStyle: "none",
+              }}
             >
-              All
-            </span>
-            <span
-              onClick={() => setStatusTask(true)}
-              style={{ color: statusTask === true ? "black" : "grey" }}
-            >
-              Completed
-            </span>
-            <span
-              onClick={() => setStatusTask(false)}
-              style={{ color: statusTask === false ? "black" : "grey" }}
-            >
-              Uncomplete
-            </span>
-          </section>
-          <section
-            className="task-list"
-            style={{
-              maxHeight: "410px",
-              overflowY: "auto",
-              scrollbarWidth: "none",
-              msOverflowStyle: "none",
-            }}
-          >
-            {sortedTasks.map((task) => (
-              <TaskItem
-                key={task.id}
-                task={task}
-                onDelete={handleDelete}
-                onToggle={handleToggle}
-                toggleModal={toggleModal}
-              />
-            ))}
-          </section>
-        </ul>
+              {sortedTasks.map((task) => (
+                <TaskItem
+                  key={task.id}
+                  task={task}
+                  onTaskClick={handleTaskClick}
+                />
+              ))}
+            </section>
+          </ul>
+        )}
+      </div>
+      {showModal && (
+        <Modal task={selectedTask} setCreateVisible={handleModalClose} />
       )}
     </div>
   );

@@ -14,7 +14,6 @@ export const tasksSlice = createSlice({
       return state.filter((task) => task.id !== action.payload);
     },
     toggleTask: (state, action) => {
-      debugger;
       const task = state.find((task) => task.id === action.payload);
       if (task) {
         task.completed = !task.completed;
@@ -26,9 +25,6 @@ export const tasksSlice = createSlice({
         task.name = action.payload.name;
         task.priority = action.payload.priority;
       }
-    },
-    toggleModal: (state) => {
-      state.isOpenModal = !state.isOpenModal;
     },
   },
 });
