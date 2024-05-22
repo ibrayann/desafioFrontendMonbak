@@ -36,4 +36,4 @@ Esta aplicación te permite crear, ver, actualizar y eliminar tareas. Utiliza Re
 Para ejecutar las pruebas unitarias, puedes utilizar el siguiente comando:
 Para ejecutar las pruebas unitarias, puedes utilizar el siguiente comando:
 
-yarn test
+`yarn test`
