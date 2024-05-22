@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import TaskForm from "./TaskForm";
 import TaskItem from "./TaskItem";
-import Undraw from "../../../public/undraw_no_data_re_kwbl.svg";
+import Undraw from "/undraw_no_data_re_kwbl.svg";
 import Modal from "./Modal";
 
 const TaskList = () => {

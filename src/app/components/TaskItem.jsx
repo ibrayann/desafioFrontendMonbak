@@ -95,10 +95,15 @@ const TaskItem = ({ task, onTaskClick }) => {
         </div>
         <button
           type="button"
-          className="btn btn-link ms-2 p-0"
-          style={{ zIndex: 100, color: confirmDelete ? "#ff006f" : "#A2A3B9" }}
+          className="btn btn-link ms-2 p-0 d-flex align-items-center gap-1 justify-content-center"
+          style={{
+            zIndex: 100,
+            textDecoration: "none",
+            color: confirmDelete ? "#ff006f" : "#A2A3B9",
+          }}
           onClick={onHandleDelete}
         >
+          {confirmDelete && "Eliminar"}
           <FaTimes />
         </button>
       </div>

@@ -3,7 +3,26 @@ import { v4 as uuidv4 } from "uuid";
 
 export const tasksSlice = createSlice({
   name: "tasks",
-  initialState: [],
+  initialState: [
+    {
+      id: uuidv4(),
+      name: "Task 1",
+      priority: "High",
+      completed: false,
+    },
+    {
+      id: uuidv4(),
+      name: "Task 2",
+      priority: "Medium",
+      completed: false,
+    },
+    {
+      id: uuidv4(),
+      name: "Task 3",
+      priority: "Low",
+      completed: false,
+    },
+  ],
 
   reducers: {
     addTask: (state, action) => {
