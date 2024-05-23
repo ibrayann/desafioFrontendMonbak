@@ -13,21 +13,17 @@ import {
   REGISTER,
 } from "redux-persist";
 
-// Configuración de persistencia
 const persistConfig = {
   key: "root",
   storage,
 };
 
-// Combinación de reducers
 const rootReducer = combineReducers({
   tasks: tasksReducer,
 });
 
-// Reducer persistente
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-// Configuración del store con middleware personalizado
 const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>

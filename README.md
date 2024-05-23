@@ -1,7 +1,5 @@
 # Desafío Frontend Monbak
 
-Este es el proyecto del Desafío Frontend Monbak, una aplicación de gestión de tareas construida con React.
-
 ## Descripción
 
 Esta aplicación te permite crear, ver, actualizar y eliminar tareas. Utiliza Redux para gestionar el estado de la aplicación y Redux Persist para mantener el estado incluso después de que el navegador se cierre. También incorpora notificaciones visuales utilizando React Hot Toast.
